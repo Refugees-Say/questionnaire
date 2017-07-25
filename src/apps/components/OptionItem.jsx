@@ -19,13 +19,18 @@ class OptionItem extends React.Component {
         width: "75%",
         textAlign: "center",
         margin: "0 auto",
-        padding: "5px 10px"
+        padding: "5px 0px",
       },
+      box: {
+        backgroundColor: "#efefef",
+        fontSize: "0.8rem",
+        padding: "5px 10px"
+      }
     }
 
     return(
       <div style={style.container} onClick={this.clickHandler}>
-        <h5>{this.props.data.option_text}</h5>
+        <div style={style.box}>{this.props.data.option_text}</div>
       </div>
     )
   }

@@ -205,10 +205,14 @@ class QuestionnaireApp extends React.Component {
     }
 
     return(
-      <div>
-        <CenteredBlock>
-          {contents}
-        </CenteredBlock>
+      <div style={{backgroundImage: "url(question_bg2.jpg)", backgroundSize: "cover"}}>
+        <div style={{maxWidth: "80%", margin: "0 auto"}}>
+          <CenteredBlock>
+            <h4 style={{textAlign: "center"}}> Refugee Match </h4>
+            <br />
+            {contents}
+          </CenteredBlock>
+        </div>
       </div>
     )
   }

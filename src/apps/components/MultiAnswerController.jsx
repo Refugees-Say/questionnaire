@@ -34,7 +34,8 @@ class MultiAnswerController extends React.Component {
     let options = []
     for (let option of this.props.data) {
       options.push(
-        <OptionItem data={option} onClick={this.optionToggle} />
+        <OptionItem data={option} onClick={this.optionToggle}
+          chosenAnswers={this.props.chosenAnswers} />
       )
     }
 
