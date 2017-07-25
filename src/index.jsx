@@ -10,7 +10,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      password: "",
+      password: "refsay",
     }
     this.passwordHandler = this.passwordHandler.bind(this)
   }
