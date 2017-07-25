@@ -12,7 +12,7 @@ class QuestionnaireApp extends React.Component {
       questionList: [],
       questionListStatus: "LOADING"
     }
-    this.answerHandler.bind(this)
+    this.answerHandler = this.answerHandler.bind(this)
   }
 
   answerHandler(questionData) {

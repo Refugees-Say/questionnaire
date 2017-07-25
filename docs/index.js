@@ -26920,7 +26920,7 @@ var QuestionnaireApp = function (_React$Component) {
       questionList: [],
       questionListStatus: "LOADING"
     };
-    _this.answerHandler.bind(_this);
+    _this.answerHandler = _this.answerHandler.bind(_this);
     return _this;
   }
 
