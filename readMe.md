@@ -1,4 +1,4 @@
-# Shangri-La
+# Questionnaire
 Web based front-end for the platform. Understands the preferences of refugees through a questionnaire and recommends resettlement locations based on these preferences.
 
 ## Stack and design principles
