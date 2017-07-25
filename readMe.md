@@ -12,8 +12,16 @@ Web based front-end for the platform. Understands the preferences of refugees th
 ## API Spec
 This is a spec of the parts of the API needed by this front-end.
 
+`user_id` will always be retrieved from the session and not explicitly sent.
+
+#### Login API
+`country`, `username (optional)`, `password (optional)` --> Register user and map session to user
+
+#### Language API
+`user_id` --> Return list of languages
+
 #### User API
-`user_id` --> Return current status
+`language_preference`, `full_name (optional)`, `date_of_birth (optional)` --> Return current status
 
 ```javascript
 {
@@ -31,7 +39,7 @@ This is a spec of the parts of the API needed by this front-end.
 [
   {
     question_id: "UniqQuesID",
-    question_type: "multi_answer" / "single_answer",
+    question_type: "multi_answer" / "single_answer" / "ranking",
     question_text: "Which of these do you prefer?",
     question_image: "/img/question_image_url.png",
     options: [
@@ -61,6 +69,24 @@ This is a spec of the parts of the API needed by this front-end.
 
 #### Recommendations API
 To be spec'd
+
+#### Available Locations API
+`user_id` --> Full list of available locations
+
+```javascript
+[
+  {
+    location_id: "UniqQuesID",
+    location_name: "Boston",
+    location_group: "Massachusetts",
+    location_score: 27.3
+  },
+  ...
+]
+```
+
+#### Location Details API
+`user_id`, `location_id` --> All Location details
 
 ## License
 Open source, need to choose a license!
