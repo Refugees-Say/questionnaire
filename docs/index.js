@@ -11637,7 +11637,7 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      password: "refsay"
+      password: ""
     };
     _this.passwordHandler = _this.passwordHandler.bind(_this);
     return _this;
