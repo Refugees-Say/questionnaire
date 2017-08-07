@@ -1,5 +1,5 @@
 import React from "react"
-
+import colors from "../../colors.js"
 
 class OptionItem extends React.Component {
 
@@ -22,7 +22,8 @@ class OptionItem extends React.Component {
         padding: "5px 0px",
       },
       box: {
-        backgroundColor: "#efefef",
+        backgroundColor: colors.optionItem.bg,
+        border: `solid 1px ${colors.optionItem.border}`,
         fontSize: "0.8rem",
         padding: "5px 10px"
       }

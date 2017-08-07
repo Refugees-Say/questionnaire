@@ -1,6 +1,7 @@
 import React from "react"
 import CenteredBlock from "../components/CenteredBlock.jsx"
 import Question from "./components/Question.jsx"
+import colors from "../colors"
 
 class QuestionnaireApp extends React.Component {
 
@@ -204,12 +205,39 @@ class QuestionnaireApp extends React.Component {
       contents = <Question data={questionData} submitAnswer={this.answerHandler} />
     }
 
+    const style = {
+      container: {
+        display: "flex",
+        flexFlow: "column",
+        minHeight: "100vh",
+        backgroundImage: "url(question_bg2.jpg)",
+        backgroundSize: "cover",
+      },
+      header: {
+        flexGrow: "0",
+        flexShrink: "1",
+        flexBasis: "60px",
+        backgroundColor: colors.navbar.bg,
+        color: colors.navbar.text,
+      },
+      body: {
+        flexGrow: "1",
+        flexShrink: "1",
+        flexBasis: "auto",
+        padding: "20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+    }
+
     return(
-      <div style={{backgroundImage: "url(question_bg2.jpg)", backgroundSize: "cover"}}>
-        <div style={{maxWidth: "80%", margin: "0 auto"}}>
+      <div style={style.container}>
+        <div style={style.header}>
+          <h4 style={{textAlign: "center"}}> Refugee Match </h4>
+        </div>
+        <div style={style.body}>
           <CenteredBlock>
-            <h4 style={{textAlign: "center"}}> Refugee Match </h4>
-            <br />
             {contents}
           </CenteredBlock>
         </div>

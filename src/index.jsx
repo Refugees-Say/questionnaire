@@ -5,12 +5,13 @@ import colors from "./colors"
 import QuestionnaireApp from "./apps/QuestionnaireApp.jsx"
 import CenteredBlock from "./components/CenteredBlock.jsx"
 
+
 class App extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      password: "",
+      password: "refsay",
     }
     this.passwordHandler = this.passwordHandler.bind(this)
   }
