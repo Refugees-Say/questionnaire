@@ -14,6 +14,7 @@ class OptionItem extends React.Component {
   }
 
   render() {
+
     const style = {
       container: {
         width: "75%",
@@ -25,13 +26,28 @@ class OptionItem extends React.Component {
         backgroundColor: colors.optionItem.bg,
         border: `solid 1px ${colors.optionItem.border}`,
         fontSize: "0.8rem",
-        padding: "5px 10px"
+        padding: "5px 10px",
+        color: colors.optionItem.text,
+      },
+      chosenBox: {
+        backgroundColor: colors.chosenOptionItem.bg,
+        border: `solid 1px ${colors.chosenOptionItem.border}`,
+        fontSize: "0.8rem",
+        padding: "5px 10px",
+        color: colors.chosenOptionItem.text,
       }
+    }
+
+    let buttonStyle = style.box
+
+    if (this.props.chosen) {
+      console.log(this.props)
+      buttonStyle = style.chosenBox
     }
 
     return(
       <div style={style.container} onClick={this.clickHandler}>
-        <div style={style.box}>{this.props.data.option_text}</div>
+        <div style={buttonStyle}>{this.props.data.option_text}</div>
       </div>
     )
   }

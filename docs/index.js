@@ -6960,6 +6960,7 @@ var OptionItem = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+
       var style = {
         container: {
           width: "75%",
@@ -6971,16 +6972,31 @@ var OptionItem = function (_React$Component) {
           backgroundColor: _colors2.default.optionItem.bg,
           border: "solid 1px " + _colors2.default.optionItem.border,
           fontSize: "0.8rem",
-          padding: "5px 10px"
+          padding: "5px 10px",
+          color: _colors2.default.optionItem.text
+        },
+        chosenBox: {
+          backgroundColor: _colors2.default.chosenOptionItem.bg,
+          border: "solid 1px " + _colors2.default.chosenOptionItem.border,
+          fontSize: "0.8rem",
+          padding: "5px 10px",
+          color: _colors2.default.chosenOptionItem.text
         }
       };
+
+      var buttonStyle = style.box;
+
+      if (this.props.chosen) {
+        console.log(this.props);
+        buttonStyle = style.chosenBox;
+      }
 
       return _react2.default.createElement(
         "div",
         { style: style.container, onClick: this.clickHandler },
         _react2.default.createElement(
           "div",
-          { style: style.box },
+          { style: buttonStyle },
           this.props.data.option_text
         )
       );
@@ -11518,11 +11534,21 @@ module.exports = exports['default'];
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 const colors = {
   optionItem: {
+    text: "#333",
     bg: "#fff",
-    border: "#336699",
+    border: "#8bd4da",
+  },
+  chosenOptionItem: {
+    text: "#fff",
+    bg: "#8bd4da",
+    border: "#8bd4da",
   },
   navbar: {
     bg: "#336699",
+    text: "#fff",
+  },
+  nextButton: {
+    bg: "#8bd4da",
     text: "#fff",
   }
 }
@@ -27186,7 +27212,7 @@ var QuestionnaireApp = function (_React$Component) {
             question_type: "multi_answer",
             question_text: "Which of these sectors would you be most likely to look for a job in?",
             question_image: null,
-            next_question_id: "1",
+            next_question_id: "5",
             options: [{
               option_id: "4_1",
               option_text: "Administration",
@@ -27226,6 +27252,21 @@ var QuestionnaireApp = function (_React$Component) {
             }, {
               option_id: "4_10",
               option_text: "Business",
+              option_image: null
+            }]
+          }, {
+            question_id: "5",
+            question_type: "single_answer",
+            question_text: "Would you prefer to live in the city or the countryside?",
+            question_image: null,
+            next_question_id: "1",
+            options: [{
+              option_id: "5_1",
+              option_text: "Rural",
+              option_image: null
+            }, {
+              option_id: "5_2",
+              option_text: "Urban",
               option_image: null
             }]
           }],
@@ -27343,6 +27384,10 @@ var _Options = __webpack_require__(256);
 
 var _Options2 = _interopRequireDefault(_Options);
 
+var _colors = __webpack_require__(103);
+
+var _colors2 = _interopRequireDefault(_colors);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27386,6 +27431,21 @@ var Question = function (_React$Component) {
       var style = {
         container: {
           textAlign: "center"
+        },
+        question: {
+          marginBottom: "40px"
+        },
+        nextButton: {
+          backgroundColor: _colors2.default.nextButton.bg,
+          color: _colors2.default.nextButton.text,
+          padding: "10px",
+          borderRadius: "15px",
+          border: _colors2.default.nextButton.bg,
+          marginTop: "30px",
+          minWidth: "100px",
+          fontSize: "0.7rem",
+          fontWeight: "700",
+          outline: "0"
         }
       };
 
@@ -27394,7 +27454,7 @@ var Question = function (_React$Component) {
         { style: style.container },
         _react2.default.createElement(
           "h3",
-          null,
+          { style: style.question },
           this.props.data.question_text
         ),
         _react2.default.createElement(_Options2.default, { data: this.props.data.options,
@@ -27403,8 +27463,8 @@ var Question = function (_React$Component) {
           answerHandler: this.updateAnswer }),
         _react2.default.createElement(
           "button",
-          { onClick: this.clickHandler },
-          "Next"
+          { style: style.nextButton, onClick: this.clickHandler },
+          "NEXT"
         )
       );
     }
@@ -27584,8 +27644,12 @@ var MultiAnswerController = function (_React$Component) {
         for (var _iterator = this.props.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var option = _step.value;
 
-          options.push(_react2.default.createElement(_OptionItem2.default, { data: option, onClick: this.optionToggle,
-            chosenAnswers: this.props.chosenAnswers }));
+          var isChosen = false;
+          if (this.props.chosenAnswers.indexOf(option.option_id) > -1) {
+            isChosen = true;
+          }
+          options.push(_react2.default.createElement(_OptionItem2.default, { data: option, optionToggle: this.optionToggle,
+            chosen: isChosen }));
         }
       } catch (err) {
         _didIteratorError = true;
@@ -27662,12 +27726,10 @@ var SingleAnswerController = function (_React$Component) {
     value: function optionToggle(optionId) {
       var optionIndex = this.props.chosenAnswers.indexOf(optionId);
 
-      var newAnswers = this.props.chosenAnswers.slice();
+      var newAnswers = [optionId];
 
       if (optionIndex > -1) {
         newAnswers.splice(optionIndex, 1);
-      } else {
-        newAnswers.push(optionId);
       }
 
       this.props.answerHandler(newAnswers);
@@ -27690,7 +27752,12 @@ var SingleAnswerController = function (_React$Component) {
         for (var _iterator = this.props.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var option = _step.value;
 
-          options.push(_react2.default.createElement(_OptionItem2.default, { data: option, onClick: this.optionToggle }));
+          var isChosen = false;
+          if (this.props.chosenAnswers.indexOf(option.option_id) > -1) {
+            isChosen = true;
+          }
+          options.push(_react2.default.createElement(_OptionItem2.default, { data: option, optionToggle: this.optionToggle,
+            chosen: isChosen }));
         }
       } catch (err) {
         _didIteratorError = true;
@@ -27795,7 +27862,12 @@ var RankingController = function (_React$Component) {
         for (var _iterator = this.props.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var option = _step.value;
 
-          options.push(_react2.default.createElement(_OptionItem2.default, { data: option, optionToggle: this.optionToggle }));
+          var isChosen = false;
+          if (this.props.chosenAnswers.indexOf(option.option_id) > -1) {
+            isChosen = true;
+          }
+          options.push(_react2.default.createElement(_OptionItem2.default, { data: option, optionToggle: this.optionToggle,
+            chosen: isChosen }));
         }
       } catch (err) {
         _didIteratorError = true;

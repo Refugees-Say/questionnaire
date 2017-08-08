@@ -124,7 +124,7 @@ class QuestionnaireApp extends React.Component {
             question_type: "multi_answer",
             question_text: "Which of these sectors would you be most likely to look for a job in?",
             question_image: null,
-            next_question_id: "1",
+            next_question_id: "5",
             options: [
               {
                 option_id: "4_1",
@@ -177,7 +177,26 @@ class QuestionnaireApp extends React.Component {
                 option_image: null
               },
             ]
-          }
+          },
+          {
+            question_id: "5",
+            question_type: "single_answer",
+            question_text: "Would you prefer to live in the city or the countryside?",
+            question_image: null,
+            next_question_id: "1",
+            options: [
+              {
+                option_id: "5_1",
+                option_text: "Rural",
+                option_image: null
+              },
+              {
+                option_id: "5_2",
+                option_text: "Urban",
+                option_image: null
+              },
+            ]
+          },
         ],
         activeQuestionId: "1",
         questionListStatus: "READY",

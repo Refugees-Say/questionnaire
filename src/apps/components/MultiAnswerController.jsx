@@ -33,13 +33,15 @@ class MultiAnswerController extends React.Component {
 
     let options = []
     for (let option of this.props.data) {
+      let isChosen = false
+      if (this.props.chosenAnswers.indexOf(option.option_id) > -1) {
+        isChosen = true
+      }
       options.push(
-        <OptionItem data={option} onClick={this.optionToggle}
-          chosenAnswers={this.props.chosenAnswers} />
+        <OptionItem data={option} optionToggle={this.optionToggle}
+          chosen={isChosen}/>
       )
     }
-
-
 
     return(
       <div style={style.container}>
