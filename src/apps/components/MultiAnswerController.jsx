@@ -10,18 +10,18 @@ class MultiAnswerController extends React.Component {
     this.optionToggle = this.optionToggle.bind(this)
   }
 
-  optionToggle(optionId) {
-    let optionIndex = this.props.chosenAnswers.indexOf(optionId)
+  optionToggle(toggledOption) {
+    let optionPresent = this.props.chosenAnswers.filter((e) => e.option_id === toggledOption.option_id)
 
     let newAnswers = this.props.chosenAnswers.slice()
 
-    if (optionIndex > -1) {
-      newAnswers.splice(optionIndex, 1)
+    if (optionPresent.length > 0) {
+      newAnswers = newAnswers.filter((e) => e.option_id !== option_id)
     } else {
-      newAnswers.push(optionId)
+      newAnswers.push(toggledOption)
     }
 
-    this.props.answerHandler(newAnswers)
+    this.props.updateAnswers(newAnswers)
   }
 
   render() {
@@ -32,14 +32,15 @@ class MultiAnswerController extends React.Component {
     }
 
     let options = []
+    let chosenOptionIds = this.props.chosenAnswers.map((e) => e.option_id)
     for (let option of this.props.data) {
       let isChosen = false
-      if (this.props.chosenAnswers.indexOf(option.option_id) > -1) {
+      if (chosenOptionIds.indexOf(option.option_id) > -1) {
         isChosen = true
       }
       options.push(
-        <OptionItem data={option} optionToggle={this.optionToggle}
-          chosen={isChosen}/>
+        <OptionItem key={option.option_id}
+          data={option} optionToggle={this.optionToggle} chosen={isChosen}/>
       )
     }
 

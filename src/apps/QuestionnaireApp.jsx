@@ -11,16 +11,28 @@ class QuestionnaireApp extends React.Component {
       activeQuestionId: null,
       activeQuestionStatus: "LOADING",
       questionList: [],
-      questionListStatus: "LOADING"
+      questionListStatus: "LOADING",
+      chosenAnswers: [],
     }
-    this.answerHandler = this.answerHandler.bind(this)
+    this.submitAnswers = this.submitAnswers.bind(this)
+    this.updateAnswers = this.updateAnswers.bind(this)
   }
 
-  answerHandler(questionData) {
-    // Send the answer to the API
-    this.setState({
-      activeQuestionId: questionData.next_question_id
-    })
+  submitAnswers(questionData) {
+    setTimeout(
+      () => {
+        console.log(this.props.chosenAnswers)
+        this.setState({
+          activeQuestionId: questionData.next_question_id,
+          chosenAnswers: []
+        })
+      },
+      500
+    )
+  }
+
+  updateAnswers(newAnswers) {
+    this.setState({chosenAnswers: newAnswers})
   }
 
   fetchQuestionList() {
@@ -221,7 +233,10 @@ class QuestionnaireApp extends React.Component {
       let questionData = this.state.questionList.filter((question) =>
         this.state.activeQuestionId === question.question_id
       )[0]
-      contents = <Question data={questionData} submitAnswer={this.answerHandler} />
+      contents = <Question data={questionData}
+        chosenAnswers={this.state.chosenAnswers}
+        submitAnswers={this.submitAnswers}
+        updateAnswers={this.updateAnswers} />
     }
 
     const style = {

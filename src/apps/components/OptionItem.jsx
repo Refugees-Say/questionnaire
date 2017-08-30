@@ -10,7 +10,7 @@ class OptionItem extends React.Component {
   }
 
   clickHandler() {
-    this.props.optionToggle(this.props.data.option_id)
+    this.props.optionToggle(this.props.data)
   }
 
   render() {
@@ -41,7 +41,6 @@ class OptionItem extends React.Component {
     let buttonStyle = style.box
 
     if (this.props.chosen) {
-      console.log(this.props)
       buttonStyle = style.chosenBox
     }
 

@@ -9,15 +9,15 @@ class Options extends React.Component {
   constructor(props) {
     super(props)
     this.displayName = "Options"
-    this.updateAnswer = this.updateAnswer.bind(this)
+    this.updateAnswers = this.updateAnswers.bind(this)
   }
 
-  updateAnswer(chosenAnswers) {
-    console.log(this.props)
-    this.props.answerHandler(chosenAnswers)
+  updateAnswers(chosenAnswers) {
+    this.props.updateAnswers(chosenAnswers)
   }
 
   render() {
+    console.log(this.props.chosenAnswers)
     const style = {
       container: {
         textAlign: "center",
@@ -29,15 +29,15 @@ class Options extends React.Component {
     if (this.props.type==="multi_answer") {
       optionsController = <MultiAnswerController
         data={this.props.data} chosenAnswers={this.props.chosenAnswers}
-        answerHandler={this.updateAnswer} />
+        updateAnswers={this.updateAnswers} />
     } else if (this.props.type==="single_answer") {
       optionsController = <SingleAnswerController
         data={this.props.data} chosenAnswers={this.props.chosenAnswers}
-        answerHandler={this.updateAnswer} />
+        updateAnswers={this.updateAnswers} />
     } else if (this.props.type==="ranking") {
       optionsController = <RankingController
         data={this.props.data} chosenAnswers={this.props.chosenAnswers}
-        answerHandler={this.updateAnswer} />
+        updateAnswers={this.updateAnswers} />
     }
 
     return(

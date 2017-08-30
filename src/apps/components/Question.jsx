@@ -7,21 +7,16 @@ class Question extends React.Component {
   constructor(props) {
     super(props)
     this.displayName = "Question"
-    this.state = {
-      chosenAnswers: []
-    }
-    this.clickHandler = this.clickHandler.bind(this)
-    this.updateAnswer = this.updateAnswer.bind(this)
+    this.submitAnswers = this.submitAnswers.bind(this)
+    this.updateAnswers = this.updateAnswers.bind(this)
   }
 
-  updateAnswer(answerSet) {
-    this.setState({
-      chosenAnswers: answerSet
-    })
+  updateAnswers(newAnswers) {
+    this.props.updateAnswers(newAnswers, this.props.data)
   }
 
-  clickHandler() {
-    this.props.submitAnswer(this.props.data, this.state.chosenAnswers)
+  submitAnswers() {
+    this.props.submitAnswers(this.props.data)
   }
 
   render() {
@@ -51,9 +46,9 @@ class Question extends React.Component {
         <h3 style={style.question}>{this.props.data.question_text}</h3>
         <Options data={this.props.data.options}
           type={this.props.data.question_type}
-          chosenAnswers={this.state.chosenAnswers}
-          answerHandler={this.updateAnswer} />
-        <button style={style.nextButton} onClick={this.clickHandler}>NEXT</button>
+          chosenAnswers={this.props.chosenAnswers}
+          updateAnswers={this.updateAnswers} />
+        <button style={style.nextButton} onClick={this.submitAnswers}>NEXT</button>
       </div>
     )
   }
