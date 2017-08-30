@@ -4,6 +4,8 @@
   "description": "Mobile first front-end. Collects resettlement preferences and provides recommendations.",
   "main": "src/index.js",
   "scripts": {
+    "watch": "webpack --watch",
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,6 +33,7 @@
     "radium": "^0.19.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-sortable-hoc": "^0.6.7",
     "webpack": "^3.4.0"
   }
 }

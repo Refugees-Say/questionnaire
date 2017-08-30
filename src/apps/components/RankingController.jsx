@@ -1,5 +1,31 @@
 import React from "react"
 import OptionItem from "./OptionItem.jsx"
+import {SortableContainer, SortableElement, arrayMove} from "react-sortable-hoc"
+import colors from "../../colors.js"
+
+const buttonStyle = {
+  backgroundColor: colors.optionItem.bg,
+  border: `solid 1px ${colors.optionItem.border}`,
+  fontSize: "0.8rem",
+  padding: "5px 10px",
+  color: colors.optionItem.text,
+}
+
+const SortableItem = SortableElement(
+  ({value}) => <div style={buttonStyle}>{value.option_text}</div>
+)
+
+const SortableList = SortableContainer(
+  ({items}) => {
+    return (
+      <div>
+        {items.map((value, index) => (
+          <SortableItem key={`item-${index}`} index={index} value={value} />
+        ))}
+      </div>
+    )
+  }
+)
 
 
 class RankingController extends React.Component {
@@ -7,21 +33,12 @@ class RankingController extends React.Component {
   constructor(props) {
     super(props)
     this.displayName = "RankingController"
-    this.optionToggle = this.optionToggle.bind(this)
+    this.onSortEnd = this.onSortEnd.bind(this)
   }
 
-  optionToggle(optionId) {
-    let optionIndex = this.props.chosenAnswers.indexOf(optionId)
-
-    let newAnswers = this.props.chosenAnswers.slice()
-
-    if (optionIndex > -1) {
-      newAnswers.splice(optionIndex, 1)
-    } else {
-      newAnswers.push(optionId)
-    }
-
-    this.props.answerHandler(newAnswers)
+  onSortEnd({oldIndex, newIndex}) {
+    let newAnswers = this.props.data.slice()
+    this.props.updateAnswers(arrayMove(newAnswers, oldIndex, newIndex))
   }
 
   render() {
@@ -30,26 +47,17 @@ class RankingController extends React.Component {
         textAlign: "center",
       }
     }
-
-    let options = []
-    for (let option of this.props.data) {
-      let isChosen = false
-      if (this.props.chosenAnswers.indexOf(option.option_id) > -1) {
-        isChosen = true
-      }
-      options.push(
-        <OptionItem data={option} optionToggle={this.optionToggle}
-          chosen={isChosen}/>
-      )
+    let optionList = this.props.data
+    if (this.props.chosenAnswers.length > 0) {
+      optionList = this.props.chosenAnswers
     }
 
     return(
       <div style={style.container}>
-        {options}
+        <SortableList items={optionList} onSortEnd={this.onSortEnd} />
       </div>
     )
   }
-
 }
 
 export default RankingController
