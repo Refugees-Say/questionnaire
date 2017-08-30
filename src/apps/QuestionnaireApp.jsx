@@ -9,26 +9,37 @@ class QuestionnaireApp extends React.Component {
     super(props)
     this.state = {
       activeQuestionId: null,
-      activeQuestionStatus: "LOADING",
+      activeQuestionStatus: "YET_TO_START",
       questionList: [],
-      questionListStatus: "LOADING",
+      questionListStatus: "YET_TO_START",
       chosenAnswers: [],
     }
     this.submitAnswers = this.submitAnswers.bind(this)
     this.updateAnswers = this.updateAnswers.bind(this)
+    this.clickStart = this.clickStart.bind(this)
   }
 
   submitAnswers(questionData) {
     setTimeout(
       () => {
         console.log(this.props.chosenAnswers)
-        this.setState({
-          activeQuestionId: questionData.next_question_id,
-          chosenAnswers: []
-        })
+        if (questionData.next_question_id) {
+          this.setState({
+            activeQuestionId: questionData.next_question_id,
+            chosenAnswers: []
+          })
+        } else {
+          this.setState({
+            activeQuestionStatus: "ALL_COMPLETE"
+          })
+        }
       },
       500
     )
+  }
+
+  clickStart() {
+    this.fetchQuestionList()
   }
 
   updateAnswers(newAnswers) {
@@ -36,6 +47,7 @@ class QuestionnaireApp extends React.Component {
   }
 
   fetchQuestionList() {
+    this.setState({questionListStatus: "LOADING"})
     setTimeout(() =>
       this.setState({
         questionList: [
@@ -195,7 +207,7 @@ class QuestionnaireApp extends React.Component {
             question_type: "single_answer",
             question_text: "Would you prefer to live in the city or the countryside?",
             question_image: null,
-            next_question_id: "1",
+            next_question_id: null,
             options: [
               {
                 option_id: "5_1",
@@ -218,27 +230,8 @@ class QuestionnaireApp extends React.Component {
     )
   }
 
-  componentDidMount() {
-    this.fetchQuestionList()
-  }
 
   render() {
-    let contents = <h3></h3>
-
-    if (this.state.questionListStatus=="LOADING") {
-      contents = <h4> Loading Questionnaire... </h4>
-    } else if (this.state.activeQuestionStatus=="LOADING") {
-      contents = <h4> Loading Questionnaire... </h4>
-    } else {
-      let questionData = this.state.questionList.filter((question) =>
-        this.state.activeQuestionId === question.question_id
-      )[0]
-      contents = <Question data={questionData}
-        chosenAnswers={this.state.chosenAnswers}
-        submitAnswers={this.submitAnswers}
-        updateAnswers={this.updateAnswers} />
-    }
-
     const style = {
       container: {
         display: "flex",
@@ -263,6 +256,44 @@ class QuestionnaireApp extends React.Component {
         alignItems: "center",
         justifyContent: "center",
       },
+      startButtonContainer: {
+        width: "75%",
+        textAlign: "center",
+        margin: "0 auto",
+        padding: "5px 0px",
+      },
+      startButton: {
+        backgroundColor: colors.optionItem.bg,
+        border: `solid 1px ${colors.optionItem.border}`,
+        fontSize: "0.8rem",
+        padding: "5px 10px",
+        color: colors.optionItem.text,
+      },
+    }
+
+    let contents = <h3></h3>
+
+    if (this.state.questionListStatus=="LOADING") {
+      contents = <h4> Loading Questionnaire... </h4>
+    } else if (this.state.activeQuestionStatus=="YET_TO_START") {
+      contents = (
+        <div>
+          <h4> Please click the button below to begin </h4>
+          <div style={style.startButtonContainer} onClick={this.clickStart}>
+            <div style={style.startButton}>Get Started</div>
+          </div>
+        </div>
+      )
+    } else if (this.state.activeQuestionStatus=="ALL_COMPLETE") {
+      contents = <h4> Thank you! Matching your preferences... </h4>
+    } else {
+      let questionData = this.state.questionList.filter((question) =>
+        this.state.activeQuestionId === question.question_id
+      )[0]
+      contents = <Question data={questionData}
+        chosenAnswers={this.state.chosenAnswers}
+        submitAnswers={this.submitAnswers}
+        updateAnswers={this.updateAnswers} />
     }
 
     return(

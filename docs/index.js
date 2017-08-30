@@ -28534,13 +28534,14 @@ var QuestionnaireApp = function (_React$Component) {
 
     _this.state = {
       activeQuestionId: null,
-      activeQuestionStatus: "LOADING",
+      activeQuestionStatus: "YET_TO_START",
       questionList: [],
-      questionListStatus: "LOADING",
+      questionListStatus: "YET_TO_START",
       chosenAnswers: []
     };
     _this.submitAnswers = _this.submitAnswers.bind(_this);
     _this.updateAnswers = _this.updateAnswers.bind(_this);
+    _this.clickStart = _this.clickStart.bind(_this);
     return _this;
   }
 
@@ -28551,11 +28552,22 @@ var QuestionnaireApp = function (_React$Component) {
 
       setTimeout(function () {
         console.log(_this2.props.chosenAnswers);
-        _this2.setState({
-          activeQuestionId: questionData.next_question_id,
-          chosenAnswers: []
-        });
+        if (questionData.next_question_id) {
+          _this2.setState({
+            activeQuestionId: questionData.next_question_id,
+            chosenAnswers: []
+          });
+        } else {
+          _this2.setState({
+            activeQuestionStatus: "ALL_COMPLETE"
+          });
+        }
       }, 500);
+    }
+  }, {
+    key: "clickStart",
+    value: function clickStart() {
+      this.fetchQuestionList();
     }
   }, {
     key: "updateAnswers",
@@ -28567,6 +28579,7 @@ var QuestionnaireApp = function (_React$Component) {
     value: function fetchQuestionList() {
       var _this3 = this;
 
+      this.setState({ questionListStatus: "LOADING" });
       setTimeout(function () {
         return _this3.setState({
           questionList: [{
@@ -28694,7 +28707,7 @@ var QuestionnaireApp = function (_React$Component) {
             question_type: "single_answer",
             question_text: "Would you prefer to live in the city or the countryside?",
             question_image: null,
-            next_question_id: "1",
+            next_question_id: null,
             options: [{
               option_id: "5_1",
               option_text: "Rural",
@@ -28712,38 +28725,9 @@ var QuestionnaireApp = function (_React$Component) {
       }, 2000);
     }
   }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.fetchQuestionList();
-    }
-  }, {
     key: "render",
     value: function render() {
       var _this4 = this;
-
-      var contents = _react2.default.createElement("h3", null);
-
-      if (this.state.questionListStatus == "LOADING") {
-        contents = _react2.default.createElement(
-          "h4",
-          null,
-          " Loading Questionnaire... "
-        );
-      } else if (this.state.activeQuestionStatus == "LOADING") {
-        contents = _react2.default.createElement(
-          "h4",
-          null,
-          " Loading Questionnaire... "
-        );
-      } else {
-        var questionData = this.state.questionList.filter(function (question) {
-          return _this4.state.activeQuestionId === question.question_id;
-        })[0];
-        contents = _react2.default.createElement(_Question2.default, { data: questionData,
-          chosenAnswers: this.state.chosenAnswers,
-          submitAnswers: this.submitAnswers,
-          updateAnswers: this.updateAnswers });
-      }
 
       var style = {
         container: {
@@ -28768,8 +28752,64 @@ var QuestionnaireApp = function (_React$Component) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center"
+        },
+        startButtonContainer: {
+          width: "75%",
+          textAlign: "center",
+          margin: "0 auto",
+          padding: "5px 0px"
+        },
+        startButton: {
+          backgroundColor: _colors2.default.optionItem.bg,
+          border: "solid 1px " + _colors2.default.optionItem.border,
+          fontSize: "0.8rem",
+          padding: "5px 10px",
+          color: _colors2.default.optionItem.text
         }
       };
+
+      var contents = _react2.default.createElement("h3", null);
+
+      if (this.state.questionListStatus == "LOADING") {
+        contents = _react2.default.createElement(
+          "h4",
+          null,
+          " Loading Questionnaire... "
+        );
+      } else if (this.state.activeQuestionStatus == "YET_TO_START") {
+        contents = _react2.default.createElement(
+          "div",
+          null,
+          _react2.default.createElement(
+            "h4",
+            null,
+            " Please click the button below to begin "
+          ),
+          _react2.default.createElement(
+            "div",
+            { style: style.startButtonContainer, onClick: this.clickStart },
+            _react2.default.createElement(
+              "div",
+              { style: style.startButton },
+              "Get Started"
+            )
+          )
+        );
+      } else if (this.state.activeQuestionStatus == "ALL_COMPLETE") {
+        contents = _react2.default.createElement(
+          "h4",
+          null,
+          " Thank you! Matching your preferences... "
+        );
+      } else {
+        var questionData = this.state.questionList.filter(function (question) {
+          return _this4.state.activeQuestionId === question.question_id;
+        })[0];
+        contents = _react2.default.createElement(_Question2.default, { data: questionData,
+          chosenAnswers: this.state.chosenAnswers,
+          submitAnswers: this.submitAnswers,
+          updateAnswers: this.updateAnswers });
+      }
 
       return _react2.default.createElement(
         "div",
