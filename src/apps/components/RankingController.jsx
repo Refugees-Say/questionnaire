@@ -9,6 +9,7 @@ const buttonStyle = {
   fontSize: "0.8rem",
   padding: "5px 10px",
   color: colors.optionItem.text,
+  textAlign: "center",
 }
 
 const SortableItem = SortableElement(
