@@ -11,12 +11,13 @@ class MultiAnswerController extends React.Component {
   }
 
   optionToggle(toggledOption) {
-    let optionPresent = this.props.chosenAnswers.filter((e) => e.option_id === toggledOption.option_id)
-
+    let optionPresent = this.props.chosenAnswers.filter(
+      (e) => e.option_id === toggledOption.option_id
+    )
     let newAnswers = this.props.chosenAnswers.slice()
 
     if (optionPresent.length > 0) {
-      newAnswers = newAnswers.filter((e) => e.option_id !== option_id)
+      newAnswers = newAnswers.filter((e) => e.option_id !== toggledOption.option_id)
     } else {
       newAnswers.push(toggledOption)
     }

@@ -29094,12 +29094,11 @@ var MultiAnswerController = function (_React$Component) {
       var optionPresent = this.props.chosenAnswers.filter(function (e) {
         return e.option_id === toggledOption.option_id;
       });
-
       var newAnswers = this.props.chosenAnswers.slice();
 
       if (optionPresent.length > 0) {
         newAnswers = newAnswers.filter(function (e) {
-          return e.option_id !== option_id;
+          return e.option_id !== toggledOption.option_id;
         });
       } else {
         newAnswers.push(toggledOption);
