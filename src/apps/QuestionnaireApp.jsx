@@ -21,22 +21,16 @@ class QuestionnaireApp extends React.Component {
   }
 
   submitAnswers(questionData) {
-    setTimeout(
-      () => {
-        console.log(this.props.chosenAnswers)
-        if (questionData.next_question_id) {
-          this.setState({
-            activeQuestionId: questionData.next_question_id,
-            chosenAnswers: []
-          })
-        } else {
-          this.setState({
-            activeQuestionStatus: "ALL_COMPLETE"
-          })
-        }
-      },
-      500
-    )
+    if (questionData.next_question_id) {
+      this.setState({
+        activeQuestionId: questionData.next_question_id,
+        chosenAnswers: []
+      })
+    } else {
+      this.setState({
+        activeQuestionStatus: "ALL_COMPLETE"
+      })
+    }
   }
 
   previousQuestion(prev_question_id) {

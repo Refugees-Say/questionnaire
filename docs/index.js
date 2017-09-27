@@ -28551,21 +28551,16 @@ var QuestionnaireApp = function (_React$Component) {
   _createClass(QuestionnaireApp, [{
     key: "submitAnswers",
     value: function submitAnswers(questionData) {
-      var _this2 = this;
-
-      setTimeout(function () {
-        console.log(_this2.props.chosenAnswers);
-        if (questionData.next_question_id) {
-          _this2.setState({
-            activeQuestionId: questionData.next_question_id,
-            chosenAnswers: []
-          });
-        } else {
-          _this2.setState({
-            activeQuestionStatus: "ALL_COMPLETE"
-          });
-        }
-      }, 500);
+      if (questionData.next_question_id) {
+        this.setState({
+          activeQuestionId: questionData.next_question_id,
+          chosenAnswers: []
+        });
+      } else {
+        this.setState({
+          activeQuestionStatus: "ALL_COMPLETE"
+        });
+      }
     }
   }, {
     key: "previousQuestion",
@@ -28592,11 +28587,11 @@ var QuestionnaireApp = function (_React$Component) {
   }, {
     key: "fetchQuestionList",
     value: function fetchQuestionList() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.setState({ questionListStatus: "LOADING" });
       setTimeout(function () {
-        return _this3.setState({
+        return _this2.setState({
           questionList: [{
             question_id: "1",
             question_type: "ranking",
@@ -28747,7 +28742,7 @@ var QuestionnaireApp = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       var style = {
         container: {
@@ -28824,7 +28819,7 @@ var QuestionnaireApp = function (_React$Component) {
         );
       } else {
         var questionData = this.state.questionList.filter(function (question) {
-          return _this4.state.activeQuestionId === question.question_id;
+          return _this3.state.activeQuestionId === question.question_id;
         })[0];
         contents = _react2.default.createElement(_Question2.default, { data: questionData,
           chosenAnswers: this.state.chosenAnswers,
