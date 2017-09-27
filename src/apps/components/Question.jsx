@@ -38,6 +38,7 @@ class Question extends React.Component {
         fontSize: "0.7rem",
         fontWeight: "700",
         outline: "0",
+        cursor: "pointer",
       }
     }
 

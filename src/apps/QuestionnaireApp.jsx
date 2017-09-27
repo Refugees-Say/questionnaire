@@ -268,6 +268,7 @@ class QuestionnaireApp extends React.Component {
         fontSize: "0.8rem",
         padding: "5px 10px",
         color: colors.optionItem.text,
+        cursor: "pointer",
       },
     }
 

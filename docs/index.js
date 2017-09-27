@@ -28766,7 +28766,8 @@ var QuestionnaireApp = function (_React$Component) {
           border: "solid 1px " + _colors2.default.optionItem.border,
           fontSize: "0.8rem",
           padding: "5px 10px",
-          color: _colors2.default.optionItem.text
+          color: _colors2.default.optionItem.text,
+          cursor: "pointer"
         }
       };
 
@@ -28920,7 +28921,8 @@ var Question = function (_React$Component) {
           minWidth: "100px",
           fontSize: "0.7rem",
           fontWeight: "700",
-          outline: "0"
+          outline: "0",
+          cursor: "pointer"
         }
       };
 
