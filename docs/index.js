@@ -28544,6 +28544,7 @@ var QuestionnaireApp = function (_React$Component) {
     _this.submitAnswers = _this.submitAnswers.bind(_this);
     _this.updateAnswers = _this.updateAnswers.bind(_this);
     _this.clickStart = _this.clickStart.bind(_this);
+    _this.previousQuestion = _this.previousQuestion.bind(_this);
     return _this;
   }
 
@@ -28565,6 +28566,18 @@ var QuestionnaireApp = function (_React$Component) {
           });
         }
       }, 500);
+    }
+  }, {
+    key: "previousQuestion",
+    value: function previousQuestion(prev_question_id) {
+      if (this.state.questionList.filter(function (e) {
+        return e.question_id === prev_question_id;
+      })[0]) {
+        this.setState({
+          activeQuestionId: prev_question_id,
+          chosenAnswers: []
+        });
+      }
     }
   }, {
     key: "clickStart",
@@ -28589,6 +28602,7 @@ var QuestionnaireApp = function (_React$Component) {
             question_type: "ranking",
             question_text: "Rank how important these factors are to you",
             question_image: null,
+            prev_question_id: null,
             next_question_id: "2",
             options: [{
               option_id: "1_1",
@@ -28612,6 +28626,7 @@ var QuestionnaireApp = function (_React$Component) {
             question_type: "multi_answer",
             question_text: "Is it important for you to access any of these?",
             question_image: null,
+            prev_question_id: "1",
             next_question_id: "3",
             options: [{
               option_id: "2_1",
@@ -28631,6 +28646,7 @@ var QuestionnaireApp = function (_React$Component) {
             question_type: "multi_answer",
             question_text: "Is it important for you to live near any of these places of worship?",
             question_image: null,
+            prev_question_id: "2",
             next_question_id: "4",
             options: [{
               option_id: "3_1",
@@ -28662,6 +28678,7 @@ var QuestionnaireApp = function (_React$Component) {
             question_type: "multi_answer",
             question_text: "Which of these sectors would you be most likely to look for a job in?",
             question_image: null,
+            prev_question_id: "3",
             next_question_id: "5",
             options: [{
               option_id: "4_1",
@@ -28709,6 +28726,7 @@ var QuestionnaireApp = function (_React$Component) {
             question_type: "single_answer",
             question_text: "Would you prefer to live in the city or the countryside?",
             question_image: null,
+            prev_question_id: "4",
             next_question_id: null,
             options: [{
               option_id: "5_1",
@@ -28811,7 +28829,8 @@ var QuestionnaireApp = function (_React$Component) {
         contents = _react2.default.createElement(_Question2.default, { data: questionData,
           chosenAnswers: this.state.chosenAnswers,
           submitAnswers: this.submitAnswers,
-          updateAnswers: this.updateAnswers });
+          updateAnswers: this.updateAnswers,
+          previousQuestion: this.previousQuestion });
       }
 
       return _react2.default.createElement(
@@ -28888,6 +28907,7 @@ var Question = function (_React$Component) {
     _this.displayName = "Question";
     _this.submitAnswers = _this.submitAnswers.bind(_this);
     _this.updateAnswers = _this.updateAnswers.bind(_this);
+    _this.previousQuestion = _this.previousQuestion.bind(_this);
     return _this;
   }
 
@@ -28902,6 +28922,11 @@ var Question = function (_React$Component) {
       this.props.submitAnswers(this.props.data);
     }
   }, {
+    key: "previousQuestion",
+    value: function previousQuestion() {
+      this.props.previousQuestion(this.props.data.prev_question_id);
+    }
+  }, {
     key: "render",
     value: function render() {
       var style = {
@@ -28910,6 +28935,20 @@ var Question = function (_React$Component) {
         },
         question: {
           marginBottom: "40px"
+        },
+        prevButton: {
+          backgroundColor: _colors2.default.nextButton.bg,
+          color: _colors2.default.nextButton.text,
+          padding: "10px",
+          borderRadius: "15px",
+          border: _colors2.default.nextButton.bg,
+          marginTop: "30px",
+          minWidth: "100px",
+          fontSize: "0.7rem",
+          fontWeight: "700",
+          outline: "0",
+          cursor: "pointer",
+          marginRight: "10px"
         },
         nextButton: {
           backgroundColor: _colors2.default.nextButton.bg,
@@ -28926,6 +28965,16 @@ var Question = function (_React$Component) {
         }
       };
 
+      var prevButton = null;
+
+      if (this.props.data.prev_question_id) {
+        prevButton = _react2.default.createElement(
+          "button",
+          { style: style.prevButton, onClick: this.previousQuestion },
+          "BACK"
+        );
+      }
+
       return _react2.default.createElement(
         "div",
         { style: style.container },
@@ -28938,6 +28987,7 @@ var Question = function (_React$Component) {
           type: this.props.data.question_type,
           chosenAnswers: this.props.chosenAnswers,
           updateAnswers: this.updateAnswers }),
+        prevButton,
         _react2.default.createElement(
           "button",
           { style: style.nextButton, onClick: this.submitAnswers },

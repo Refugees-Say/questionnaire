@@ -9,6 +9,7 @@ class Question extends React.Component {
     this.displayName = "Question"
     this.submitAnswers = this.submitAnswers.bind(this)
     this.updateAnswers = this.updateAnswers.bind(this)
+    this.previousQuestion = this.previousQuestion.bind(this)
   }
 
   updateAnswers(newAnswers) {
@@ -19,6 +20,10 @@ class Question extends React.Component {
     this.props.submitAnswers(this.props.data)
   }
 
+  previousQuestion() {
+    this.props.previousQuestion(this.props.data.prev_question_id)
+  }
+
   render() {
     const style = {
       container: {
@@ -26,6 +31,20 @@ class Question extends React.Component {
       },
       question: {
         marginBottom: "40px",
+      },
+      prevButton: {
+        backgroundColor: colors.nextButton.bg,
+        color: colors.nextButton.text,
+        padding: "10px",
+        borderRadius: "15px",
+        border: colors.nextButton.bg,
+        marginTop: "30px",
+        minWidth: "100px",
+        fontSize: "0.7rem",
+        fontWeight: "700",
+        outline: "0",
+        cursor: "pointer",
+        marginRight: "10px",
       },
       nextButton: {
         backgroundColor: colors.nextButton.bg,
@@ -42,6 +61,15 @@ class Question extends React.Component {
       }
     }
 
+    let prevButton = null
+
+    if (this.props.data.prev_question_id) {
+      prevButton =
+        <button style={style.prevButton} onClick={this.previousQuestion}>
+          BACK
+        </button>
+    }
+
     return(
       <div style={style.container}>
         <h3 style={style.question}>{this.props.data.question_text}</h3>
@@ -49,7 +77,10 @@ class Question extends React.Component {
           type={this.props.data.question_type}
           chosenAnswers={this.props.chosenAnswers}
           updateAnswers={this.updateAnswers} />
-        <button style={style.nextButton} onClick={this.submitAnswers}>NEXT</button>
+        {prevButton}
+        <button style={style.nextButton} onClick={this.submitAnswers}>
+          NEXT
+        </button>
       </div>
     )
   }

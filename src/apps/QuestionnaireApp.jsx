@@ -17,6 +17,7 @@ class QuestionnaireApp extends React.Component {
     this.submitAnswers = this.submitAnswers.bind(this)
     this.updateAnswers = this.updateAnswers.bind(this)
     this.clickStart = this.clickStart.bind(this)
+    this.previousQuestion = this.previousQuestion.bind(this)
   }
 
   submitAnswers(questionData) {
@@ -38,6 +39,15 @@ class QuestionnaireApp extends React.Component {
     )
   }
 
+  previousQuestion(prev_question_id) {
+    if (this.state.questionList.filter((e) => e.question_id === prev_question_id)[0]) {
+      this.setState({
+        activeQuestionId: prev_question_id,
+        chosenAnswers: []
+      })
+    }
+  }
+
   clickStart() {
     this.fetchQuestionList()
   }
@@ -56,6 +66,7 @@ class QuestionnaireApp extends React.Component {
             question_type: "ranking",
             question_text: "Rank how important these factors are to you",
             question_image: null,
+            prev_question_id: null,
             next_question_id: "2",
             options: [
               {
@@ -85,6 +96,7 @@ class QuestionnaireApp extends React.Component {
             question_type: "multi_answer",
             question_text: "Is it important for you to access any of these?",
             question_image: null,
+            prev_question_id: "1",
             next_question_id: "3",
             options: [
               {
@@ -109,6 +121,7 @@ class QuestionnaireApp extends React.Component {
             question_type: "multi_answer",
             question_text: "Is it important for you to live near any of these places of worship?",
             question_image: null,
+            prev_question_id: "2",
             next_question_id: "4",
             options: [
               {
@@ -148,6 +161,7 @@ class QuestionnaireApp extends React.Component {
             question_type: "multi_answer",
             question_text: "Which of these sectors would you be most likely to look for a job in?",
             question_image: null,
+            prev_question_id: "3",
             next_question_id: "5",
             options: [
               {
@@ -207,6 +221,7 @@ class QuestionnaireApp extends React.Component {
             question_type: "single_answer",
             question_text: "Would you prefer to live in the city or the countryside?",
             question_image: null,
+            prev_question_id: "4",
             next_question_id: null,
             options: [
               {
@@ -294,7 +309,8 @@ class QuestionnaireApp extends React.Component {
       contents = <Question data={questionData}
         chosenAnswers={this.state.chosenAnswers}
         submitAnswers={this.submitAnswers}
-        updateAnswers={this.updateAnswers} />
+        updateAnswers={this.updateAnswers}
+        previousQuestion={this.previousQuestion} />
     }
 
     return(
