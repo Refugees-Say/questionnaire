@@ -7576,14 +7576,16 @@ var OptionItem = function (_React$Component) {
           border: "solid 1px " + _colors2.default.optionItem.border,
           fontSize: "0.8rem",
           padding: "5px 10px",
-          color: _colors2.default.optionItem.text
+          color: _colors2.default.optionItem.text,
+          cursor: "pointer"
         },
         chosenBox: {
           backgroundColor: _colors2.default.chosenOptionItem.bg,
           border: "solid 1px " + _colors2.default.chosenOptionItem.border,
           fontSize: "0.8rem",
           padding: "5px 10px",
-          color: _colors2.default.chosenOptionItem.text
+          color: _colors2.default.chosenOptionItem.text,
+          cursor: "pointer"
         }
       };
 

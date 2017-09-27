@@ -28,6 +28,7 @@ class OptionItem extends React.Component {
         fontSize: "0.8rem",
         padding: "5px 10px",
         color: colors.optionItem.text,
+        cursor: "pointer",
       },
       chosenBox: {
         backgroundColor: colors.chosenOptionItem.bg,
@@ -35,6 +36,7 @@ class OptionItem extends React.Component {
         fontSize: "0.8rem",
         padding: "5px 10px",
         color: colors.chosenOptionItem.text,
+        cursor: "pointer",
       }
     }
 
