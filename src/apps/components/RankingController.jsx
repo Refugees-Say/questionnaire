@@ -10,6 +10,7 @@ const buttonStyle = {
   padding: "5px 10px",
   color: colors.optionItem.text,
   textAlign: "center",
+  cursor: "move",
 }
 
 const SortableItem = SortableElement(

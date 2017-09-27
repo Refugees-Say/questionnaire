@@ -29315,7 +29315,8 @@ var buttonStyle = {
   fontSize: "0.8rem",
   padding: "5px 10px",
   color: _colors2.default.optionItem.text,
-  textAlign: "center"
+  textAlign: "center",
+  cursor: "move"
 };
 
 var SortableItem = (0, _reactSortableHoc.SortableElement)(function (_ref) {
