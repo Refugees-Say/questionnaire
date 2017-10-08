@@ -13146,10 +13146,16 @@ var App = function (_React$Component) {
     };
     _this.passwordHandler = _this.passwordHandler.bind(_this);
     _this.viewHandler = _this.viewHandler.bind(_this);
+    _this.homeClick = _this.homeClick.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
+    key: "homeClick",
+    value: function homeClick() {
+      window.location.reload();
+    }
+  }, {
     key: "passwordHandler",
     value: function passwordHandler(e) {
       this.setState({ password: e.target.value });
@@ -13190,16 +13196,26 @@ var App = function (_React$Component) {
           alignItems: "center",
           justifyContent: "center"
         },
+        footer: {
+          padding: "20px",
+          textAlign: "center"
+        },
+        logo: {
+          width: "30%",
+          height: "auto",
+          display: "inline-block"
+        },
         chooseButtonContainer: {
-          width: "75%",
+          width: "90%",
           textAlign: "center",
           margin: "0 auto",
-          padding: "5px 0px"
+          padding: "15px 0px"
         },
         chooseButton: {
-          backgroundColor: _colors2.default.optionItem.bg,
+          minWidth: "200px",
           border: "solid 1px " + _colors2.default.optionItem.border,
-          fontSize: "0.8rem",
+          backgroundColor: _colors2.default.optionItem.bg,
+          fontSize: "1.2rem",
           padding: "5px 10px",
           color: _colors2.default.optionItem.text,
           cursor: "pointer"
@@ -13267,8 +13283,8 @@ var App = function (_React$Component) {
             { style: style.header },
             _react2.default.createElement(
               "h4",
-              { style: { textAlign: "center" } },
-              " The Resettlement Service "
+              { style: { textAlign: "center" }, onClick: this.homeClick },
+              "The Resettlement Service"
             )
           ),
           _react2.default.createElement(
@@ -13279,7 +13295,9 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             "div",
             { style: style.footer },
-            "LOGOS"
+            _react2.default.createElement("img", { style: style.logo, src: "refsay_logo.png" }),
+            _react2.default.createElement("img", { style: style.logo, src: "ml_logo.png" }),
+            _react2.default.createElement("img", { style: style.logo, src: "oxford_logo.png" })
           )
         )
       );
@@ -28643,7 +28661,6 @@ var QuestionnaireApp = function (_React$Component) {
     };
     _this.submitAnswers = _this.submitAnswers.bind(_this);
     _this.updateAnswers = _this.updateAnswers.bind(_this);
-    _this.clickStart = _this.clickStart.bind(_this);
     _this.previousQuestion = _this.previousQuestion.bind(_this);
     return _this;
   }
@@ -28675,8 +28692,8 @@ var QuestionnaireApp = function (_React$Component) {
       }
     }
   }, {
-    key: "clickStart",
-    value: function clickStart() {
+    key: "componentDidMount",
+    value: function componentDidMount() {
       this.fetchQuestionList();
     }
   }, {
@@ -28727,20 +28744,6 @@ var QuestionnaireApp = function (_React$Component) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center"
-        },
-        startButtonContainer: {
-          width: "75%",
-          textAlign: "center",
-          margin: "0 auto",
-          padding: "5px 0px"
-        },
-        startButton: {
-          backgroundColor: _colors2.default.optionItem.bg,
-          border: "solid 1px " + _colors2.default.optionItem.border,
-          fontSize: "0.8rem",
-          padding: "5px 10px",
-          color: _colors2.default.optionItem.text,
-          cursor: "pointer"
         }
       };
 
@@ -28754,22 +28757,9 @@ var QuestionnaireApp = function (_React$Component) {
         );
       } else if (this.state.activeQuestionStatus == "YET_TO_START") {
         contents = _react2.default.createElement(
-          "div",
+          "h4",
           null,
-          _react2.default.createElement(
-            "h4",
-            null,
-            " Please click the button below to begin "
-          ),
-          _react2.default.createElement(
-            "div",
-            { style: style.startButtonContainer, onClick: this.clickStart },
-            _react2.default.createElement(
-              "div",
-              { style: style.startButton },
-              "Get Started"
-            )
-          )
+          " Loading Questionnaire... "
         );
       } else if (this.state.activeQuestionStatus == "ALL_COMPLETE") {
         contents = _react2.default.createElement(

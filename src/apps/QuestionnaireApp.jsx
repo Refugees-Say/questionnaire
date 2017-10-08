@@ -16,7 +16,6 @@ class QuestionnaireApp extends React.Component {
     }
     this.submitAnswers = this.submitAnswers.bind(this)
     this.updateAnswers = this.updateAnswers.bind(this)
-    this.clickStart = this.clickStart.bind(this)
     this.previousQuestion = this.previousQuestion.bind(this)
   }
 
@@ -42,7 +41,7 @@ class QuestionnaireApp extends React.Component {
     }
   }
 
-  clickStart() {
+  componentDidMount() {
     this.fetchQuestionList()
   }
 
@@ -89,20 +88,6 @@ class QuestionnaireApp extends React.Component {
         alignItems: "center",
         justifyContent: "center",
       },
-      startButtonContainer: {
-        width: "75%",
-        textAlign: "center",
-        margin: "0 auto",
-        padding: "5px 0px",
-      },
-      startButton: {
-        backgroundColor: colors.optionItem.bg,
-        border: `solid 1px ${colors.optionItem.border}`,
-        fontSize: "0.8rem",
-        padding: "5px 10px",
-        color: colors.optionItem.text,
-        cursor: "pointer",
-      },
     }
 
     let contents = <h3></h3>
@@ -110,14 +95,7 @@ class QuestionnaireApp extends React.Component {
     if (this.state.questionListStatus=="LOADING") {
       contents = <h4> Loading Questionnaire... </h4>
     } else if (this.state.activeQuestionStatus=="YET_TO_START") {
-      contents = (
-        <div>
-          <h4> Please click the button below to begin </h4>
-          <div style={style.startButtonContainer} onClick={this.clickStart}>
-            <div style={style.startButton}>Get Started</div>
-          </div>
-        </div>
-      )
+      contents = <h4> Loading Questionnaire... </h4>
     } else if (this.state.activeQuestionStatus=="ALL_COMPLETE") {
       contents = <h4 style={{textAlign: "center"}}> {this.props.completionMessage} </h4>
     } else {
