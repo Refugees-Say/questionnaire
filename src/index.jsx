@@ -113,9 +113,11 @@ class App extends React.Component {
     if (this.state.password != "refsay") {
       app =
         <CenteredBlock>
-          <h3> Password? </h3>
-          <input style={{textAlign: "center"}} autoFocus type="password"
-            value={this.state.password} onChange={this.passwordHandler}/>
+          <div style={{textAlign: "center"}}>
+            <h3> Password? </h3>
+            <input style={{textAlign: "center"}} autoFocus type="password"
+              value={this.state.password} onChange={this.passwordHandler}/>
+          </div>
         </CenteredBlock>
     }
 

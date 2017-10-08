@@ -13263,12 +13263,16 @@ var App = function (_React$Component) {
           _CenteredBlock2.default,
           null,
           _react2.default.createElement(
-            "h3",
-            null,
-            " Password? "
-          ),
-          _react2.default.createElement("input", { style: { textAlign: "center" }, autoFocus: true, type: "password",
-            value: this.state.password, onChange: this.passwordHandler })
+            "div",
+            { style: { textAlign: "center" } },
+            _react2.default.createElement(
+              "h3",
+              null,
+              " Password? "
+            ),
+            _react2.default.createElement("input", { style: { textAlign: "center" }, autoFocus: true, type: "password",
+              value: this.state.password, onChange: this.passwordHandler })
+          )
         );
       }
 
