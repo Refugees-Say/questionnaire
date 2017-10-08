@@ -4,6 +4,7 @@ import Radium from "radium"
 import colors from "./colors"
 import QuestionnaireApp from "./apps/QuestionnaireApp.jsx"
 import CenteredBlock from "./components/CenteredBlock.jsx"
+import questionData from "./questionData"
 
 
 class App extends React.Component {
@@ -12,26 +13,87 @@ class App extends React.Component {
     super(props)
     this.state = {
       password: "refsay",
+      view: "chooser"
     }
     this.passwordHandler = this.passwordHandler.bind(this)
+    this.viewHandler = this.viewHandler.bind(this)
   }
 
   passwordHandler(e) {
     this.setState({password: e.target.value})
   }
 
+  viewHandler(viewName) {
+    return () => this.setState({view: viewName})
+  }
+
   render() {
     const style = {
+      container: {
+        display: "flex",
+        flexFlow: "column",
+        minHeight: "100vh",
+        backgroundImage: "url(question_bg2.jpg)",
+        backgroundSize: "cover",
+      },
+      header: {
+        flexGrow: "0",
+        flexShrink: "1",
+        flexBasis: "60px",
+        backgroundColor: colors.navbar.bg,
+        color: colors.navbar.text,
+      },
       body: {
-        backgroundColor: colors.bodyBg,
-        color: colors.bodyText,
-      }
+        flexGrow: "1",
+        flexShrink: "1",
+        flexBasis: "auto",
+        padding: "20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+      chooseButtonContainer: {
+        width: "75%",
+        textAlign: "center",
+        margin: "0 auto",
+        padding: "5px 0px",
+      },
+      chooseButton: {
+        backgroundColor: colors.optionItem.bg,
+        border: `solid 1px ${colors.optionItem.border}`,
+        fontSize: "0.8rem",
+        padding: "5px 10px",
+        color: colors.optionItem.text,
+        cursor: "pointer",
+      },
     }
 
-    let app =
-      <Radium.StyleRoot>
-        <QuestionnaireApp />
-      </Radium.StyleRoot>
+    const completionMessage = {
+      authority: "Thank you! Updating resettlement locations database...",
+      individual: "Thank you! Matching your preferences..."
+    }
+
+    let app
+    if (this.state.view === "chooser") {
+      app =
+        <CenteredBlock>
+          <div style={style.chooseButtonContainer}>
+            <button onClick={this.viewHandler("authority")}
+              style={style.chooseButton}>
+              Refugee Council
+            </button>
+          </div>
+          <div style={style.chooseButtonContainer}>
+            <button onClick={this.viewHandler("individual")}
+              style={style.chooseButton}>
+              Individual
+            </button>
+          </div>
+        </CenteredBlock>
+    } else {
+      app = <QuestionnaireApp questionData={questionData[this.state.view]}
+        completionMessage={completionMessage[this.state.view]} />
+    }
 
     if (this.state.password != "refsay") {
       app =
@@ -43,9 +105,19 @@ class App extends React.Component {
     }
 
     return(
-      <div style={style.body}>
-        {app}
-      </div>
+      <Radium.StyleRoot>
+        <div style={style.container}>
+          <div style={style.header}>
+            <h4 style={{textAlign: "center"}}> The Resettlement Service </h4>
+          </div>
+          <div style={style.body}>
+            {app}
+          </div>
+          <div style={style.footer}>
+            LOGOS
+          </div>
+        </div>
+      </Radium.StyleRoot>
     )
   }
 }

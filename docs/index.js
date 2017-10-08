@@ -13120,6 +13120,10 @@ var _CenteredBlock = __webpack_require__(132);
 
 var _CenteredBlock2 = _interopRequireDefault(_CenteredBlock);
 
+var _questionData = __webpack_require__(456);
+
+var _questionData2 = _interopRequireDefault(_questionData);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13137,9 +13141,11 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      password: "refsay"
+      password: "refsay",
+      view: "chooser"
     };
     _this.passwordHandler = _this.passwordHandler.bind(_this);
+    _this.viewHandler = _this.viewHandler.bind(_this);
     return _this;
   }
 
@@ -13149,20 +13155,92 @@ var App = function (_React$Component) {
       this.setState({ password: e.target.value });
     }
   }, {
+    key: "viewHandler",
+    value: function viewHandler(viewName) {
+      var _this2 = this;
+
+      return function () {
+        return _this2.setState({ view: viewName });
+      };
+    }
+  }, {
     key: "render",
     value: function render() {
       var style = {
+        container: {
+          display: "flex",
+          flexFlow: "column",
+          minHeight: "100vh",
+          backgroundImage: "url(question_bg2.jpg)",
+          backgroundSize: "cover"
+        },
+        header: {
+          flexGrow: "0",
+          flexShrink: "1",
+          flexBasis: "60px",
+          backgroundColor: _colors2.default.navbar.bg,
+          color: _colors2.default.navbar.text
+        },
         body: {
-          backgroundColor: _colors2.default.bodyBg,
-          color: _colors2.default.bodyText
+          flexGrow: "1",
+          flexShrink: "1",
+          flexBasis: "auto",
+          padding: "20px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        },
+        chooseButtonContainer: {
+          width: "75%",
+          textAlign: "center",
+          margin: "0 auto",
+          padding: "5px 0px"
+        },
+        chooseButton: {
+          backgroundColor: _colors2.default.optionItem.bg,
+          border: "solid 1px " + _colors2.default.optionItem.border,
+          fontSize: "0.8rem",
+          padding: "5px 10px",
+          color: _colors2.default.optionItem.text,
+          cursor: "pointer"
         }
       };
 
-      var app = _react2.default.createElement(
-        _radium2.default.StyleRoot,
-        null,
-        _react2.default.createElement(_QuestionnaireApp2.default, null)
-      );
+      var completionMessage = {
+        authority: "Thank you! Updating resettlement locations database...",
+        individual: "Thank you! Matching your preferences..."
+      };
+
+      var app = void 0;
+      if (this.state.view === "chooser") {
+        app = _react2.default.createElement(
+          _CenteredBlock2.default,
+          null,
+          _react2.default.createElement(
+            "div",
+            { style: style.chooseButtonContainer },
+            _react2.default.createElement(
+              "button",
+              { onClick: this.viewHandler("authority"),
+                style: style.chooseButton },
+              "Refugee Council"
+            )
+          ),
+          _react2.default.createElement(
+            "div",
+            { style: style.chooseButtonContainer },
+            _react2.default.createElement(
+              "button",
+              { onClick: this.viewHandler("individual"),
+                style: style.chooseButton },
+              "Individual"
+            )
+          )
+        );
+      } else {
+        app = _react2.default.createElement(_QuestionnaireApp2.default, { questionData: _questionData2.default[this.state.view],
+          completionMessage: completionMessage[this.state.view] });
+      }
 
       if (this.state.password != "refsay") {
         app = _react2.default.createElement(
@@ -13179,9 +13257,31 @@ var App = function (_React$Component) {
       }
 
       return _react2.default.createElement(
-        "div",
-        { style: style.body },
-        app
+        _radium2.default.StyleRoot,
+        null,
+        _react2.default.createElement(
+          "div",
+          { style: style.container },
+          _react2.default.createElement(
+            "div",
+            { style: style.header },
+            _react2.default.createElement(
+              "h4",
+              { style: { textAlign: "center" } },
+              " The Resettlement Service "
+            )
+          ),
+          _react2.default.createElement(
+            "div",
+            { style: style.body },
+            app
+          ),
+          _react2.default.createElement(
+            "div",
+            { style: style.footer },
+            "LOGOS"
+          )
+        )
       );
     }
   }]);
@@ -28592,152 +28692,12 @@ var QuestionnaireApp = function (_React$Component) {
       this.setState({ questionListStatus: "LOADING" });
       setTimeout(function () {
         return _this2.setState({
-          questionList: [{
-            question_id: "1",
-            question_type: "ranking",
-            question_text: "Rank how important these factors are to you",
-            question_image: null,
-            prev_question_id: null,
-            next_question_id: "2",
-            options: [{
-              option_id: "1_1",
-              option_text: "Job opportunities",
-              option_image: null
-            }, {
-              option_id: "1_2",
-              option_text: "Cost of living",
-              option_image: null
-            }, {
-              option_id: "1_3",
-              option_text: "Quality of schools",
-              option_image: null
-            }, {
-              option_id: "1_4",
-              option_text: "Level of crime",
-              option_image: null
-            }]
-          }, {
-            question_id: "2",
-            question_type: "multi_answer",
-            question_text: "Is it important for you to access any of these?",
-            question_image: null,
-            prev_question_id: "1",
-            next_question_id: "3",
-            options: [{
-              option_id: "2_1",
-              option_text: "English teaching",
-              option_image: null
-            }, {
-              option_id: "2_2",
-              option_text: "Practical training",
-              option_image: null
-            }, {
-              option_id: "2_3",
-              option_text: "University",
-              option_image: null
-            }]
-          }, {
-            question_id: "3",
-            question_type: "multi_answer",
-            question_text: "Is it important for you to live near any of these places of worship?",
-            question_image: null,
-            prev_question_id: "2",
-            next_question_id: "4",
-            options: [{
-              option_id: "3_1",
-              option_text: "Mosque",
-              option_image: null
-            }, {
-              option_id: "3_2",
-              option_text: "Church",
-              option_image: null
-            }, {
-              option_id: "3_3",
-              option_text: "Synagogue",
-              option_image: null
-            }, {
-              option_id: "3_4",
-              option_text: "Hindu Temple",
-              option_image: null
-            }, {
-              option_id: "3_5",
-              option_text: "Sikh Temple",
-              option_image: null
-            }, {
-              option_id: "3_6",
-              option_text: "Buddhist Temple",
-              option_image: null
-            }]
-          }, {
-            question_id: "4",
-            question_type: "multi_answer",
-            question_text: "Which of these sectors would you be most likely to look for a job in?",
-            question_image: null,
-            prev_question_id: "3",
-            next_question_id: "5",
-            options: [{
-              option_id: "4_1",
-              option_text: "Administration",
-              option_image: null
-            }, {
-              option_id: "4_2",
-              option_text: "Manufacturing",
-              option_image: null
-            }, {
-              option_id: "4_3",
-              option_text: "Education",
-              option_image: null
-            }, {
-              option_id: "4_4",
-              option_text: "Construction",
-              option_image: null
-            }, {
-              option_id: "4_5",
-              option_text: "Retail",
-              option_image: null
-            }, {
-              option_id: "4_6",
-              option_text: "Health and Social work",
-              option_image: null
-            }, {
-              option_id: "4_7",
-              option_text: "Electricity, Gas and Water",
-              option_image: null
-            }, {
-              option_id: "4_8",
-              option_text: "Hotel and Restaurant",
-              option_image: null
-            }, {
-              option_id: "4_9",
-              option_text: "Agriculture",
-              option_image: null
-            }, {
-              option_id: "4_10",
-              option_text: "Business",
-              option_image: null
-            }]
-          }, {
-            question_id: "5",
-            question_type: "single_answer",
-            question_text: "Would you prefer to live in the city or the countryside?",
-            question_image: null,
-            prev_question_id: "4",
-            next_question_id: null,
-            options: [{
-              option_id: "5_1",
-              option_text: "Rural",
-              option_image: null
-            }, {
-              option_id: "5_2",
-              option_text: "Urban",
-              option_image: null
-            }]
-          }],
+          questionList: _this2.props.questionData,
           activeQuestionId: "1",
           questionListStatus: "READY",
           activeQuestionStatus: "READY"
         });
-      }, 2000);
+      }, 400);
     }
   }, {
     key: "render",
@@ -28814,8 +28774,10 @@ var QuestionnaireApp = function (_React$Component) {
       } else if (this.state.activeQuestionStatus == "ALL_COMPLETE") {
         contents = _react2.default.createElement(
           "h4",
-          null,
-          " Thank you! Matching your preferences... "
+          { style: { textAlign: "center" } },
+          " ",
+          this.props.completionMessage,
+          " "
         );
       } else {
         var questionData = this.state.questionList.filter(function (question) {
@@ -28829,26 +28791,9 @@ var QuestionnaireApp = function (_React$Component) {
       }
 
       return _react2.default.createElement(
-        "div",
-        { style: style.container },
-        _react2.default.createElement(
-          "div",
-          { style: style.header },
-          _react2.default.createElement(
-            "h4",
-            { style: { textAlign: "center" } },
-            " Refugee Match "
-          )
-        ),
-        _react2.default.createElement(
-          "div",
-          { style: style.body },
-          _react2.default.createElement(
-            _CenteredBlock2.default,
-            null,
-            contents
-          )
-        )
+        _CenteredBlock2.default,
+        null,
+        contents
       );
     }
   }]);
@@ -34071,6 +34016,693 @@ function sortableHandle(WrappedComponent) {
     return _class;
   }(_react.Component), _class.displayName = (0, _utils.provideDisplayName)('sortableHandle', WrappedComponent), _temp;
 }
+
+/***/ }),
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */,
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */,
+/* 431 */,
+/* 432 */,
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
+/* 440 */,
+/* 441 */,
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */,
+/* 447 */,
+/* 448 */,
+/* 449 */,
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */,
+/* 456 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+const questionData = {
+  individual: [
+    {
+      question_id: "1",
+      question_type: "ranking",
+      question_text: "Rank how important these factors are to you",
+      question_image: null,
+      prev_question_id: null,
+      next_question_id: "2",
+      options: [
+        {
+          option_id: "1_1",
+          option_text: "Job opportunities",
+          option_image: null
+        },
+        {
+          option_id: "1_2",
+          option_text: "Cost of living",
+          option_image: null
+        },
+        {
+          option_id: "1_3",
+          option_text: "Quality of schools",
+          option_image: null
+        },
+        {
+          option_id: "1_4",
+          option_text: "Level of crime",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "2",
+      question_type: "multi_answer",
+      question_text: "Is it important for you to access any of these?",
+      question_image: null,
+      prev_question_id: "1",
+      next_question_id: "3",
+      options: [
+        {
+          option_id: "2_1",
+          option_text: "English teaching",
+          option_image: null
+        },
+        {
+          option_id: "2_2",
+          option_text: "Practical training",
+          option_image: null
+        },
+        {
+          option_id: "2_3",
+          option_text: "University",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "3",
+      question_type: "multi_answer",
+      question_text: "Is it important for you to live near any of these places of worship?",
+      question_image: null,
+      prev_question_id: "2",
+      next_question_id: "4",
+      options: [
+        {
+          option_id: "3_1",
+          option_text: "Mosque",
+          option_image: null
+        },
+        {
+          option_id: "3_2",
+          option_text: "Church",
+          option_image: null
+        },
+        {
+          option_id: "3_3",
+          option_text: "Synagogue",
+          option_image: null
+        },
+        {
+          option_id: "3_4",
+          option_text: "Hindu Temple",
+          option_image: null
+        },
+        {
+          option_id: "3_5",
+          option_text: "Sikh Temple",
+          option_image: null
+        },
+        {
+          option_id: "3_6",
+          option_text: "Buddhist Temple",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "4",
+      question_type: "multi_answer",
+      question_text: "Which of these sectors would you be most likely to look for a job in?",
+      question_image: null,
+      prev_question_id: "3",
+      next_question_id: "5",
+      options: [
+        {
+          option_id: "4_1",
+          option_text: "Administration",
+          option_image: null
+        },
+        {
+          option_id: "4_2",
+          option_text: "Manufacturing",
+          option_image: null
+        },
+        {
+          option_id: "4_3",
+          option_text: "Education",
+          option_image: null
+        },
+        {
+          option_id: "4_4",
+          option_text: "Construction",
+          option_image: null
+        },
+        {
+          option_id: "4_5",
+          option_text: "Retail",
+          option_image: null
+        },
+        {
+          option_id: "4_6",
+          option_text: "Health and Social work",
+          option_image: null
+        },
+        {
+          option_id: "4_7",
+          option_text: "Electricity, Gas and Water",
+          option_image: null
+        },
+        {
+          option_id: "4_8",
+          option_text: "Hotel and Restaurant",
+          option_image: null
+        },
+        {
+          option_id: "4_9",
+          option_text: "Agriculture",
+          option_image: null
+        },
+        {
+          option_id: "4_10",
+          option_text: "Business",
+          option_image: null
+        },
+      ]
+    },
+    {
+      question_id: "5",
+      question_type: "single_answer",
+      question_text: "Would you prefer to live in the city or the countryside?",
+      question_image: null,
+      prev_question_id: "4",
+      next_question_id: null,
+      options: [
+        {
+          option_id: "5_1",
+          option_text: "Rural",
+          option_image: null
+        },
+        {
+          option_id: "5_2",
+          option_text: "Urban",
+          option_image: null
+        },
+      ]
+    },
+  ],
+
+  authority: [
+    {
+      question_id: "1",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Harju County?",
+      question_image: null,
+      prev_question_id: null,
+      next_question_id: "2",
+      options: [
+        {
+          option_id: "1_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "1_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "1_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "1_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "2",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Hiiu County?",
+      question_image: null,
+      prev_question_id: "1",
+      next_question_id: "3",
+      options: [
+        {
+          option_id: "2_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "2_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "2_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "2_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "3",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Ida-Viru County?",
+      question_image: null,
+      prev_question_id: "2",
+      next_question_id: "4",
+      options: [
+        {
+          option_id: "3_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "3_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "3_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "3_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "4",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Järva County?",
+      question_image: null,
+      prev_question_id: "3",
+      next_question_id: "5",
+      options: [
+        {
+          option_id: "4_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "4_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "4_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "4_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "5",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Jõgeva County?",
+      question_image: null,
+      prev_question_id: "4",
+      next_question_id: "6",
+      options: [
+        {
+          option_id: "5_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "5_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "5_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "5_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "6",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Lääne County?",
+      question_image: null,
+      prev_question_id: "5",
+      next_question_id: "7",
+      options: [
+        {
+          option_id: "6_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "6_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "6_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "6_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "7",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Lääne-Viru County?",
+      question_image: null,
+      prev_question_id: "6",
+      next_question_id: "8",
+      options: [
+        {
+          option_id: "7_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "7_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "7_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "7_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "8",
+      question_type: "multi_answer",
+      question_text: "What size of home is available in Pärnu County?",
+      question_image: null,
+      prev_question_id: "7",
+      next_question_id: "9",
+      options: [
+        {
+          option_id: "8_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "8_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "8_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "8_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "9",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Põlva County?",
+      question_image: null,
+      prev_question_id: "8",
+      next_question_id: "10",
+      options: [
+        {
+          option_id: "9_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "9_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "9_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "9_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "10",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Rapla County?",
+      question_image: null,
+      prev_question_id: "9",
+      next_question_id: "11",
+      options: [
+        {
+          option_id: "10_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "10_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "10_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "10_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "11",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Saare County?",
+      question_image: null,
+      prev_question_id: "10",
+      next_question_id: "12",
+      options: [
+        {
+          option_id: "11_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "11_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "11_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "11_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "12",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Tartu County?",
+      question_image: null,
+      prev_question_id: "11",
+      next_question_id: "13",
+      options: [
+        {
+          option_id: "12_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "12_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "12_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "12_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "13",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Valga County?",
+      question_image: null,
+      prev_question_id: "12",
+      next_question_id: "14",
+      options: [
+        {
+          option_id: "13_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "13_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "13_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "13_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "14",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Viljandi County?",
+      question_image: null,
+      prev_question_id: "13",
+      next_question_id: "15",
+      options: [
+        {
+          option_id: "14_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "14_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "14_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "14_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+    {
+      question_id: "15",
+      question_type: "multi_answer",
+      question_text: "What type of home is available in Võru County?",
+      question_image: null,
+      prev_question_id: "14",
+      next_question_id: null,
+      options: [
+        {
+          option_id: "15_1",
+          option_text: "One person",
+          option_image: null
+        },
+        {
+          option_id: "15_2",
+          option_text: "Two people",
+          option_image: null
+        },
+        {
+          option_id: "15_3",
+          option_text: "Three people",
+          option_image: null
+        },
+        {
+          option_id: "15_4",
+          option_text: "Four or more people",
+          option_image: null
+        }
+      ]
+    },
+  ]
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (questionData);
+
 
 /***/ })
 /******/ ]);
