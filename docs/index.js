@@ -13120,7 +13120,7 @@ var _CenteredBlock = __webpack_require__(132);
 
 var _CenteredBlock2 = _interopRequireDefault(_CenteredBlock);
 
-var _questionData = __webpack_require__(456);
+var _questionData = __webpack_require__(411);
 
 var _questionData2 = _interopRequireDefault(_questionData);
 
@@ -13141,12 +13141,14 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
+      username: "",
       password: "",
       view: "chooser"
     };
     _this.passwordHandler = _this.passwordHandler.bind(_this);
     _this.viewHandler = _this.viewHandler.bind(_this);
     _this.homeClick = _this.homeClick.bind(_this);
+    _this.usernameHandler = _this.usernameHandler.bind(_this);
     return _this;
   }
 
@@ -13159,6 +13161,11 @@ var App = function (_React$Component) {
     key: "passwordHandler",
     value: function passwordHandler(e) {
       this.setState({ password: e.target.value });
+    }
+  }, {
+    key: "usernameHandler",
+    value: function usernameHandler(e) {
+      this.setState({ username: e.target.value });
     }
   }, {
     key: "viewHandler",
@@ -13258,7 +13265,7 @@ var App = function (_React$Component) {
           completionMessage: completionMessage[this.state.view] });
       }
 
-      if (this.state.password != "refsay") {
+      if (this.state.view != "chooser" && this.state.password != "refsay") {
         app = _react2.default.createElement(
           _CenteredBlock2.default,
           null,
@@ -13266,11 +13273,18 @@ var App = function (_React$Component) {
             "div",
             { style: { textAlign: "center" } },
             _react2.default.createElement(
-              "h3",
+              "h4",
               null,
-              " Password? "
+              " Username "
             ),
-            _react2.default.createElement("input", { style: { textAlign: "center" }, autoFocus: true, type: "password",
+            _react2.default.createElement("input", { style: { textAlign: "center" }, autoFocus: true, type: "text",
+              value: this.state.username, onChange: this.usernameHandler }),
+            _react2.default.createElement(
+              "h4",
+              null,
+              " Password "
+            ),
+            _react2.default.createElement("input", { style: { textAlign: "center" }, type: "password",
               value: this.state.password, onChange: this.passwordHandler })
           )
         );
@@ -34012,52 +34026,7 @@ function sortableHandle(WrappedComponent) {
 }
 
 /***/ }),
-/* 411 */,
-/* 412 */,
-/* 413 */,
-/* 414 */,
-/* 415 */,
-/* 416 */,
-/* 417 */,
-/* 418 */,
-/* 419 */,
-/* 420 */,
-/* 421 */,
-/* 422 */,
-/* 423 */,
-/* 424 */,
-/* 425 */,
-/* 426 */,
-/* 427 */,
-/* 428 */,
-/* 429 */,
-/* 430 */,
-/* 431 */,
-/* 432 */,
-/* 433 */,
-/* 434 */,
-/* 435 */,
-/* 436 */,
-/* 437 */,
-/* 438 */,
-/* 439 */,
-/* 440 */,
-/* 441 */,
-/* 442 */,
-/* 443 */,
-/* 444 */,
-/* 445 */,
-/* 446 */,
-/* 447 */,
-/* 448 */,
-/* 449 */,
-/* 450 */,
-/* 451 */,
-/* 452 */,
-/* 453 */,
-/* 454 */,
-/* 455 */,
-/* 456 */
+/* 411 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

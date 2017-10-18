@@ -12,12 +12,14 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      username: "",
       password: "",
       view: "chooser"
     }
     this.passwordHandler = this.passwordHandler.bind(this)
     this.viewHandler = this.viewHandler.bind(this)
     this.homeClick = this.homeClick.bind(this)
+    this.usernameHandler = this.usernameHandler.bind(this)
   }
 
   homeClick() {
@@ -26,6 +28,10 @@ class App extends React.Component {
 
   passwordHandler(e) {
     this.setState({password: e.target.value})
+  }
+
+  usernameHandler(e) {
+    this.setState({username: e.target.value})
   }
 
   viewHandler(viewName) {
@@ -110,12 +116,15 @@ class App extends React.Component {
         completionMessage={completionMessage[this.state.view]} />
     }
 
-    if (this.state.password != "refsay") {
+    if (this.state.view != "chooser" && this.state.password != "refsay") {
       app =
         <CenteredBlock>
           <div style={{textAlign: "center"}}>
-            <h3> Password? </h3>
-            <input style={{textAlign: "center"}} autoFocus type="password"
+            <h4> Username </h4>
+            <input style={{textAlign: "center"}} autoFocus type="text"
+              value={this.state.username} onChange={this.usernameHandler}/>
+            <h4> Password </h4>
+            <input style={{textAlign: "center"}} type="password"
               value={this.state.password} onChange={this.passwordHandler}/>
           </div>
         </CenteredBlock>
