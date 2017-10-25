@@ -31,6 +31,7 @@
     "eslint": "^4.3.0",
     "eslint-plugin-react": "^7.1.0",
     "radium": "^0.19.4",
+    "rc-table": "^5.6.13",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-sortable-hoc": "^0.6.7",

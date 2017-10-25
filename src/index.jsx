@@ -3,6 +3,7 @@ import ReactDOM from "react-dom"
 import Radium from "radium"
 import colors from "./colors"
 import QuestionnaireApp from "./apps/QuestionnaireApp.jsx"
+import DatabaseApp from "./apps/DatabaseApp.jsx"
 import CenteredBlock from "./components/CenteredBlock.jsx"
 import questionData from "./questionData"
 
@@ -64,8 +65,18 @@ class App extends React.Component {
         justifyContent: "center",
       },
       footer: {
-        padding: "20px",
-        textAlign: "center",
+        display: "flex",
+        flexGrow: "0",
+        flexShrink: "1",
+        flexBasis: "200px",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+      footerLogos: {
+        maxWidth: "400px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       },
       logo: {
         width: "30%",
@@ -110,7 +121,15 @@ class App extends React.Component {
               Individual
             </button>
           </div>
+          <div style={style.chooseButtonContainer}>
+            <button onClick={this.viewHandler("resettlement-agency")}
+              style={style.chooseButton}>
+              Resettlement Agency
+            </button>
+          </div>
         </CenteredBlock>
+    } else if (this.state.view === "resettlement-agency") {
+      app = <DatabaseApp />
     } else {
       app = <QuestionnaireApp questionData={questionData[this.state.view]}
         completionMessage={completionMessage[this.state.view]} />
@@ -142,9 +161,11 @@ class App extends React.Component {
             {app}
           </div>
           <div style={style.footer}>
-            <img style={style.logo} src="refsay_logo.png" />
-            <img style={style.logo} src="ml_logo.png" />
-            <img style={style.logo} src="oxford_logo.png" />
+            <div style={style.footerLogos}>
+              <img style={style.logo} src="refsay_logo.png" />
+              <img style={style.logo} src="ml_logo.png" />
+              <img style={style.logo} src="oxford_logo.png" />
+            </div>
           </div>
         </div>
       </Radium.StyleRoot>
