@@ -6,6 +6,7 @@ import QuestionnaireApp from "./apps/QuestionnaireApp.jsx"
 import DatabaseApp from "./apps/DatabaseApp.jsx"
 import CenteredBlock from "./components/CenteredBlock.jsx"
 import questionData from "./questionData"
+import request from "superagent"
 
 
 class App extends React.Component {
@@ -15,9 +16,12 @@ class App extends React.Component {
     this.state = {
       username: "",
       password: "",
-      view: "chooser"
+      token: null,
+      view: "chooser",
+      loginStatus: "logged-out",
     }
     this.passwordHandler = this.passwordHandler.bind(this)
+    this.loginHandler = this.loginHandler.bind(this)
     this.viewHandler = this.viewHandler.bind(this)
     this.homeClick = this.homeClick.bind(this)
     this.usernameHandler = this.usernameHandler.bind(this)
@@ -33,6 +37,28 @@ class App extends React.Component {
 
   usernameHandler(e) {
     this.setState({username: e.target.value})
+  }
+
+  loginHandler(e) {
+    this.setState({loginStatus: "loading"})
+    request
+      .post("http://192.168.64.4:8000/api/v1/token/")
+      .send({
+        username: this.state.username,
+        password: this.state.password,
+      })
+      .end(
+        (err, result) => {
+          if (err) {
+            console.log(err)
+            this.setState({loginStatus: "login-failed"})
+          } else {
+            this.setState(
+              {loginStatus: "logged-in", token: result.body.token}
+            )
+          }
+        }
+      )
   }
 
   viewHandler(viewName) {
@@ -98,6 +124,17 @@ class App extends React.Component {
         color: colors.optionItem.text,
         cursor: "pointer",
       },
+      loginButton: {
+        textAlign: "center",
+        padding: "0.5rem 1rem",
+        margin: "1rem 0",
+        fontSize: "1.2rem",
+        boxShadow: "none",
+        backgroundColor: colors.loginButton.bg,
+        color: colors.loginButton.text,
+        border: "none",
+        borderRadius: "5px",
+      },
     }
 
     const completionMessage = {
@@ -128,25 +165,29 @@ class App extends React.Component {
             </button>
           </div>
         </CenteredBlock>
-    } else if (this.state.view === "resettlement-agency") {
-      app = <DatabaseApp />
     } else {
-      app = <QuestionnaireApp questionData={questionData[this.state.view]}
-        completionMessage={completionMessage[this.state.view]} />
-    }
-
-    if (this.state.view != "chooser" && this.state.password != "refsay") {
-      app =
-        <CenteredBlock>
-          <div style={{textAlign: "center"}}>
-            <h4> Username </h4>
-            <input style={{textAlign: "center"}} autoFocus type="text"
-              value={this.state.username} onChange={this.usernameHandler}/>
-            <h4> Password </h4>
-            <input style={{textAlign: "center"}} type="password"
-              value={this.state.password} onChange={this.passwordHandler}/>
-          </div>
-        </CenteredBlock>
+      if (this.state.loginStatus === "logged-in") {
+        if (this.state.view === "resettlement-agency") {
+          app = <DatabaseApp />
+        } else {
+          app = <QuestionnaireApp token={this.state.token} />
+        }
+      } else {
+        app =
+          <CenteredBlock>
+            <div style={{textAlign: "center"}}>
+              <h4> Username </h4>
+              <input style={{textAlign: "center"}} autoFocus type="text"
+                value={this.state.username} onChange={this.usernameHandler}/>
+              <h4> Password </h4>
+              <input style={{textAlign: "center"}} type="password"
+                value={this.state.password} onChange={this.passwordHandler}/>
+              <br />
+              <button style={style.loginButton}
+                onClick={this.loginHandler}> Go </button>
+            </div>
+          </CenteredBlock>
+      }
     }
 
     return(

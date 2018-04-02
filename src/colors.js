@@ -16,6 +16,10 @@ const colors = {
   nextButton: {
     bg: "#8bd4da",
     text: "#fff",
+  },
+  loginButton: {
+    bg: "#8bd4da",
+    text: "#fff",
   }
 }
 

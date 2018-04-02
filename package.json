@@ -35,6 +35,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-sortable-hoc": "^0.6.7",
+    "superagent": "^3.8.1",
     "webpack": "^3.4.0"
   }
 }

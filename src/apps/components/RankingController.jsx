@@ -14,7 +14,7 @@ const buttonStyle = {
 }
 
 const SortableItem = SortableElement(
-  ({value}) => <div style={buttonStyle}>{value.option_text}</div>
+  ({value}) => <div style={buttonStyle}>{value.choice}</div>
 )
 
 const SortableList = SortableContainer(

@@ -48,7 +48,7 @@ class OptionItem extends React.Component {
 
     return(
       <div style={style.container} onClick={this.clickHandler}>
-        <div style={buttonStyle}>{this.props.data.option_text}</div>
+        <div style={buttonStyle}>{this.props.data.choice}</div>
       </div>
     )
   }

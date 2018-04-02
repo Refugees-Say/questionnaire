@@ -7,21 +7,11 @@ class Question extends React.Component {
   constructor(props) {
     super(props)
     this.displayName = "Question"
-    this.submitAnswers = this.submitAnswers.bind(this)
     this.updateAnswers = this.updateAnswers.bind(this)
-    this.previousQuestion = this.previousQuestion.bind(this)
   }
 
   updateAnswers(newAnswers) {
     this.props.updateAnswers(newAnswers, this.props.data)
-  }
-
-  submitAnswers() {
-    this.props.submitAnswers(this.props.data)
-  }
-
-  previousQuestion() {
-    this.props.previousQuestion(this.props.data.prev_question_id)
   }
 
   render() {
@@ -63,22 +53,35 @@ class Question extends React.Component {
 
     let prevButton = null
 
-    if (this.props.data.prev_question_id) {
+    if (this.props.index > 0) {
       prevButton =
-        <button style={style.prevButton} onClick={this.previousQuestion}>
+        <button style={style.prevButton} onClick={this.props.previousQuestion}>
           BACK
         </button>
     }
 
+    let type = null
+    let data = {}
+    if (this.props.data.rank) {
+      type = "ranking"
+      data = this.props.data.rank
+    } else if (this.props.data.radio) {
+      type = "single_answer"
+      data = this.props.data.radio
+    } else {
+      type = "multi_answer"
+      data = this.props.data.selection
+    }
+
     return(
       <div style={style.container}>
-        <h3 style={style.question}>{this.props.data.question_text}</h3>
-        <Options data={this.props.data.options}
-          type={this.props.data.question_type}
+        <h3 style={style.question}>{data.question}</h3>
+        <Options data={data.choices}
+          type={type}
           chosenAnswers={this.props.chosenAnswers}
           updateAnswers={this.updateAnswers} />
         {prevButton}
-        <button style={style.nextButton} onClick={this.submitAnswers}>
+        <button style={style.nextButton} onClick={this.props.nextQuestion}>
           NEXT
         </button>
       </div>
