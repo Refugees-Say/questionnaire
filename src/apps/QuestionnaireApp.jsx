@@ -27,7 +27,7 @@ class QuestionnaireApp extends React.Component {
   }
 
   fetchQuestionList() {
-    request.get("http://192.168.64.4:8000/api/v1/questionnaires/")
+    request.get("/api/v1/questionnaires/")
       .set("Authorization", `Token ${this.props.token}`)
       .end((err, response) => {
         if (err) {
@@ -45,7 +45,7 @@ class QuestionnaireApp extends React.Component {
   }
 
   createAnswerList(questionnaireId) {
-    request.post("http://192.168.64.4:8000/api/v1/responses/")
+    request.post("/api/v1/responses/")
       .set("Authorization", `Token ${this.props.token}`)
       .send({
         questionnaire: questionnaireId,
@@ -66,7 +66,7 @@ class QuestionnaireApp extends React.Component {
   }
 
   fetchAnswerList(questionnaireId) {
-    request.get("http://192.168.64.4:8000/api/v1/responses/")
+    request.get("/api/v1/responses/")
       .query({ questionnaire: questionnaireId })
       .set("Authorization", `Token ${this.props.token}`)
       .end((err, response) => {
@@ -94,7 +94,7 @@ class QuestionnaireApp extends React.Component {
       type: "rank",
       choices: newAnswers
     }
-    request.patch(`http://192.168.64.4:8000/api/v1/responses/${this.state.responseId}/`)
+    request.patch(`/api/v1/responses/${this.state.responseId}/`)
       .set("Authorization", `Token ${this.props.token}`)
       .send({
         response: JSON.stringify({

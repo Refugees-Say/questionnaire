@@ -42,7 +42,7 @@ class App extends React.Component {
   loginHandler(e) {
     this.setState({loginStatus: "loading"})
     request
-      .post("http://192.168.64.4:8000/api/v1/token/")
+      .post("/api/v1/token/")
       .send({
         username: this.state.username,
         password: this.state.password,
